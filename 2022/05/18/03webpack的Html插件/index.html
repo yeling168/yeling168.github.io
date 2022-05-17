@@ -1,0 +1,461 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="lianghongsen">
+  <meta name="keywords" content="vue python java javascript css es6 typescript">
+  
+    <meta name="description" content="webpack-dev-server插件 安装webpack-dev-server npm install webpack-dev-server -D 运行webpack-dev-server npx webpack-dev-server 该命令不会真的会去打包文件，只是把这种文件写到内存中（内存中的打包） 开发服务器配置（在webpack.config.js中配置）  123456devServ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03webpack的Html插件">
+<meta property="og:url" content="https://yeling168.github.io/2022/05/18/03webpack%E7%9A%84Html%E6%8F%92%E4%BB%B6/index.html">
+<meta property="og:site_name" content="lhongsen">
+<meta property="og:description" content="webpack-dev-server插件 安装webpack-dev-server npm install webpack-dev-server -D 运行webpack-dev-server npx webpack-dev-server 该命令不会真的会去打包文件，只是把这种文件写到内存中（内存中的打包） 开发服务器配置（在webpack.config.js中配置）  123456devServ">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-17T17:37:03.000Z">
+<meta property="article:modified_time" content="2022-05-17T17:37:49.521Z">
+<meta property="article:author" content="lianghongsen">
+<meta property="article:tag" content="vue python java javascript css es6 typescript">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>03webpack的Html插件 - lhongsen</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yeling168.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>lhongsen</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="03webpack的Html插件">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-18 01:37" pubdate>
+        2022年5月18日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      36 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">03webpack的Html插件</h1>
+            
+            <div class="markdown-body">
+              <h3 id="webpack-dev-server插件"><a href="#webpack-dev-server插件" class="headerlink" title="webpack-dev-server插件"></a>webpack-dev-server插件</h3><ol>
+<li>安装webpack-dev-server<br> npm install webpack-dev-server -D</li>
+<li>运行webpack-dev-server<br> npx webpack-dev-server<br> 该命令不会真的会去打包文件，只是把这种文件写到内存中（内存中的打包）</li>
+<li>开发服务器配置（在webpack.config.js中配置）</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><pre><code class="hljs awk">devServer: &#123; <span class="hljs-regexp">//</span> 开发服务器的配置<br>    port: <span class="hljs-number">3000</span>, <span class="hljs-regexp">//</span> 端口<br>    progress: true, <span class="hljs-regexp">//</span> 在内存打包时候看到进度条<br>    contentBase: <span class="hljs-string">&#x27;./build&#x27;</span>, <span class="hljs-regexp">//</span> 找到当前的文件夹<br>    compress: true<br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>通过配置package.json文件运行<br>用npm run build执行打包了，npm run dev直接运行</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;webpack --config webpack.config.js&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;webpack-dev-server&quot;</span><br><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="webpack-dev-server详细配置"><a href="#webpack-dev-server详细配置" class="headerlink" title="webpack-dev-server详细配置"></a>webpack-dev-server详细配置</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs awk">devServer: &#123; <span class="hljs-regexp">//</span> 开发服务器的配置<br>    port: <span class="hljs-number">3000</span>, <span class="hljs-regexp">//</span> 指定要监听请求的端口号<br>    progress: true, <span class="hljs-regexp">//</span> 在内存打包时候看到进度条<br>    contentBase: path.join(__dirname, <span class="hljs-string">&quot;,/build&quot;</span>), <span class="hljs-regexp">//</span> 默认情况下，将使用当前工作目录作为提供内容的目录，但是你可以修改为其他目录<br>    <span class="hljs-regexp">//</span> [path.join(__dirname, <span class="hljs-string">&quot;public&quot;</span>), path.join(__dirname, <span class="hljs-string">&quot;assets&quot;</span>)]<br>    compress: true, <span class="hljs-regexp">//</span> 启用gzip 压缩<br>    clientLogLevel: <span class="hljs-string">&quot;info&quot;</span>, <span class="hljs-regexp">//</span> 可能的值有 none, error, warning 或者 info（默认值）<br>    headers: &#123; <span class="hljs-regexp">//</span> 在所有请求中添加首部内容：<br>        <span class="hljs-string">&quot;X-Custom-Foo&quot;</span>: <span class="hljs-string">&quot;bar&quot;</span><br>    &#125;,<br> lazy: true,<span class="hljs-regexp">//</span>当启用 lazy 时，dev-server 只有在请求时才编译包(bundle)<br> filename: <span class="hljs-string">&quot;bundle.js&quot;</span>,<span class="hljs-regexp">//</span>在惰性模式中，此选项可减少编译。 默认在惰性模式，每个请求结果都会产生全新的编译<br> headers: &#123; <span class="hljs-regexp">//</span> 在所有请求中添加首部内容：<br>   <span class="hljs-string">&quot;X-Custom-Foo&quot;</span>: <span class="hljs-string">&quot;bar&quot;</span><br> &#125;,<br> historyApiFallback: &#123;Boolean|Object&#125;,<br> host: <span class="hljs-string">&quot;127.0.0.1&quot;</span> <span class="hljs-regexp">//</span>指定使用一个 host。默认是 localhost<br> hot: &#123;Boolean&#125;, <span class="hljs-regexp">//</span>启用 webpack 的模块热替换特性,<br> hotOnly: &#123;Boolean&#125;,<br> https: &#123;Boolean&#125;, <span class="hljs-regexp">//</span>默认情况下，dev-server 通过 HTTP 提供服务。也可以选择带有 HTTPS 的 HTTP/<span class="hljs-number">2</span> 提供服务<br> inline: &#123;Boolean&#125;, <span class="hljs-regexp">//</span>在 dev-server 的两种不同模式之间切换。默认情况下，应用程序启用内联模式(inline mode)<br> noInfo: &#123;Boolean&#125;,<span class="hljs-regexp">//</span>启用 noInfo 后，诸如「启动时和每次保存之后，那些显示的 webpack 包(bundle)信息」的消息将被隐藏。错误和警告仍然会显示<br> proxy: &#123;object&#125;,<span class="hljs-regexp">//</span><br> public: &#123;string&#125;,<span class="hljs-regexp">//</span><br> publicPath: &#123;string&#125;,<span class="hljs-regexp">//</span><br> quiet: &#123;Boolean&#125;,<span class="hljs-regexp">//</span>启用 quiet 后，除了初始启动信息之外的任何内容都不会被打印到控制台。这也意味着来自 webpack 的错误或警告在控制台不可见<br> setup: &#123;<span class="hljs-keyword">function</span>&#125;,<span class="hljs-regexp">//</span><br> staticOptions: &#123;object&#125;,<span class="hljs-regexp">//</span><br> stats: &#123;string|object&#125;.<span class="hljs-regexp">//</span>允许你精确控制 bundle 信息展示<br> watchContentBase: &#123;Boolean&#125;,<span class="hljs-regexp">//</span>告诉服务器监视那些通过 devServer.contentBase 选项提供的文件。文件改动将触发整个页面重新加载,默认被禁<br> watchOptions: &#123;object&#125;,<span class="hljs-regexp">//</span> <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>详细配置和说明参考：<a target="_blank" rel="noopener" href="https://www.html.cn/doc/webpack2/configuration/dev-server/">https://www.html.cn/doc/webpack2/configuration/dev-server/</a></p>
+<h3 id="HTML插件"><a href="#HTML插件" class="headerlink" title="HTML插件"></a>HTML插件</h3><p>将html文件的index文件生成在build目录下</p>
+<ol>
+<li>在src目录中创建index.html文件</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>自学webpack<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <br>    <span class="hljs-comment">&lt;!-- 模板 --&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>安装html-webpack-plugin<br> npm install html-webpack-plugin -D</li>
+<li>在webpack中引用html-webpack-plugin插件<br> let HtmlWebpackPlugin &#x3D; require(“html-webpack-plugin”);</li>
+<li>在webpack.config.js中配置配置相应的参数</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs awk">plugins:[ <span class="hljs-regexp">//</span> 数组 放着所有的插件<br>    new HtmlWebpackPlugin(&#123;<br>        template: <span class="hljs-string">&#x27;./src/index.html&#x27;</span>,<br>        filename: <span class="hljs-string">&#x27;index.html&#x27;</span>,<br>  <span class="hljs-regexp">//</span> 压缩HTML代码<br>        minify: &#123;<br>            removeAttributeQuotes: true, <span class="hljs-regexp">//</span>去掉双引号<br>            collapseWhitespace: true, <span class="hljs-regexp">//</span>移除空格，将html打印成一行<br>   removeComments: true <span class="hljs-regexp">//</span>移除注释<br>        &#125;,<br>        hash: true <span class="hljs-regexp">//</span> 为了解决缓存的问题，添加哈希戳<br>    &#125;)<br>]<br></code></pre></td></tr></table></figure>
+
+<h3 id="html-webpack-plugin详细配置"><a href="#html-webpack-plugin详细配置" class="headerlink" title="html-webpack-plugin详细配置"></a>html-webpack-plugin详细配置</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs php">this.options = _.<span class="hljs-title function_ invoke__">extend</span>(&#123;<br>  <span class="hljs-attr">template</span>: path.<span class="hljs-title function_ invoke__">join</span>(__dirname, <span class="hljs-string">&#x27;default_index.ejs&#x27;</span>),<br>  <span class="hljs-attr">templateParameters</span>: templateParametersGenerator,<br>  <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;index.html&#x27;</span>,<br>  <span class="hljs-attr">hash</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-attr">inject</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-attr">compile</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-attr">favicon</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-attr">minify</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-attr">cache</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-attr">showErrors</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-attr">chunks</span>: <span class="hljs-string">&#x27;all&#x27;</span>,<br>  <span class="hljs-attr">excludeChunks</span>: [],<br>  <span class="hljs-attr">chunksSortMode</span>: <span class="hljs-string">&#x27;auto&#x27;</span>,<br>  <span class="hljs-attr">meta</span>: &#123;&#125;,<br>  <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Webpack App&#x27;</span>,<br>  <span class="hljs-attr">xhtml</span>: <span class="hljs-literal">false</span><br>&#125;, options);<br></code></pre></td></tr></table></figure>
+
+<p>简单介绍各个含义：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs lasso">title：&#123;<span class="hljs-built_in">String</span>&#125; 用来生成页面的 title 元素<br>template：&#123;<span class="hljs-built_in">String</span>&#125; 源模板文件<br>inject：&#123;<span class="hljs-built_in">Boolean</span>|<span class="hljs-built_in">String</span>&#125; 放置js资源。<span class="hljs-literal">true</span> || <span class="hljs-string">&#x27;head&#x27;</span> || <span class="hljs-string">&#x27;body&#x27;</span> || <span class="hljs-literal">false</span>,如果设置为 <span class="hljs-literal">true</span> 或者 body，所有的 javascript 资源将被放置到 body 元素的底部，<span class="hljs-string">&#x27;head&#x27;</span> 将放置到 head 元素中。<span class="hljs-literal">false</span>则不会引入。<br>hash:&#123;<span class="hljs-built_in">Boolean</span>&#125; 将添加一个唯一的 webpack 编译 hash 到所有包含的脚本和 CSS 文件，对于解除 <span class="hljs-keyword">cache</span> 很有用<br>favicon:&#123;<span class="hljs-built_in">String</span>&#125; 添加特定的 favicon 路径到输出的 HTML 文件中<br><span class="hljs-keyword">cache</span>:&#123;<span class="hljs-built_in">Boolean</span>&#125; 只有文件修改后才会重新打包文件<br>minify：&#123;<span class="hljs-built_in">Boolean</span>|Object&#125; <span class="hljs-literal">true</span> <span class="hljs-keyword">if</span> mode is <span class="hljs-string">&#x27;production&#x27;</span>, otherwise <span class="hljs-literal">false</span>,<br>&#123;<br>  collapseWhitespace: <span class="hljs-literal">true</span>,<span class="hljs-comment">//是否去除html中的空格、换行符,元素内的不会去除的</span><br>  removeComments: <span class="hljs-literal">true</span>,<span class="hljs-comment">//是否去除html注释</span><br>  removeRedundantAttributes: <span class="hljs-literal">true</span>,<span class="hljs-comment">//</span><br>  removeScriptTypeAttributes: <span class="hljs-literal">true</span>,<span class="hljs-comment">//去掉script标签的type属性</span><br>  removeStyleLinkTypeAttributes: <span class="hljs-literal">true</span>,<span class="hljs-comment">//去掉style和link标签的type属性</span><br>  useShortDoctype: <span class="hljs-literal">true</span><span class="hljs-comment">//</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://www.myjscode.com/page/articleMap.html">http://www.myjscode.com/page/articleMap.html</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/18/02webpack%E6%89%93%E5%8C%85%E5%87%BA%E6%9D%A5%E7%9A%84%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/">
+                        <span class="hidden-mobile">02webpack打包出来的文件解析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://www.cnblogs.com/lhongsen/" target="_blank" rel="nofollow noopener"><span>个人博客园</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/yeling168" target="_blank" rel="nofollow noopener"><span>github地址</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
